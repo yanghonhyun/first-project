@@ -1,7 +1,7 @@
 # my-first
 
 This template should help get you started developing with Vue 3 in Vite.
-
+该项目是一个静态页面，目前只完成了一小部分
 ## Recommended IDE Setup
 
 [VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
