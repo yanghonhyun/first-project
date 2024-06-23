@@ -17,7 +17,8 @@ const router = createRouter({
           component: () => import('@/views/layout/musicList.vue')
         }
       ]
-    }
+    },
+    { path: '/login', component: () => import('@/views/login/login.vue') }
   ]
 })
 
