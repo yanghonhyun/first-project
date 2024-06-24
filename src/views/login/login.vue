@@ -44,11 +44,18 @@ const getCode = () => {
     }
   }, 1000)
 }
+const change = ref(true)
 </script>
 <template>
   <div class="container">
     <el-col :span="12">
-      <el-form status-icon :model="ruleForm" :rules="rule" ref="ruleFormRef">
+      <el-form
+        status-icon
+        :model="ruleForm"
+        :rules="rule"
+        ref="ruleFormRef"
+        v-if="change"
+      >
         <el-form-item prop="username">
           <el-input
             type="text"
@@ -76,7 +83,40 @@ const getCode = () => {
           }}</span>
         </el-form-item>
         <el-form-item>
+          <span @click="change = false" style="padding-right: 100px"
+            >登录页</span
+          >
           <el-button>注册</el-button>
+        </el-form-item>
+      </el-form>
+      <el-form
+        status-icon
+        :model="ruleForm"
+        :rules="rule"
+        ref="ruleFormRef"
+        v-else
+      >
+        <el-form-item prop="username">
+          <el-input
+            type="text"
+            placeholder="请输入用户名"
+            v-model="ruleForm.username"
+          >
+          </el-input>
+        </el-form-item>
+        <el-form-item prop="password">
+          <el-input
+            type="text"
+            placeholder="请输入密码"
+            v-model="ruleForm.password"
+          >
+          </el-input>
+        </el-form-item>
+        <el-form-item>
+          <span @click="change = true" style="padding-right: 100px"
+            >登录页</span
+          >
+          <el-button>登录</el-button>
         </el-form-item>
       </el-form>
     </el-col>
