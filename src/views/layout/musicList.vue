@@ -1,6 +1,17 @@
 <script setup>
 import { lrc } from '@/utils/data'
 import { ref, onMounted } from 'vue'
+/*import {getMusicList, getCodeList} from '@/api/music.js'
+//因没有网络资源此页面为静态页面，下列代码可将其变为动态页面
+//网络请求
+const res = getMusicList()
+list = res.data.data
+//假设下面数组为请求得到的数据
+const list = ref([
+  {musicname: '', id:'', address: '', src:''},
+  {musicname: '', id:'', address: '', src:''},
+  {musicname: '', id:'', address: '', src:''},
+])*/
 //解析时间
 const audio = ref(null)
 const parseTime = (timeStr) => {
@@ -70,22 +81,44 @@ onMounted(() => {
   }
   audio.value.addEventListener('timeupdate', setOffset)
 })
+
+/*
+//传递选中音乐信息,lyricList即该静态页面中的lrc,当有网络请求将lyricList 赋值给lrc即可
+const lyricList = ref([])
+const src = ref('')
+const passLyric = (address, srcAddress) => {
+  lyricList = getCodeList(address)
+  //给audio切换播放地址
+  src.value = srcAddress
+}*/
 </script>
 <template>
   <div class="common-layout">
     <el-container>
       <el-header>
+        <!--有网络数据将audio换成这个
+        <audio :src=src></audio>!-->
         <audio src="src\assets\music.mp3" controls ref="audio"></audio>
       </el-header>
       <el-container>
-        <el-aside width="200px">歌列表</el-aside>
-        <el-main>
-          <div class="box">
-            <ul ref="ulValue">
-              <li v-for="item in arr" :key="item.time">{{ item.word }}</li>
-            </ul>
-          </div>
-        </el-main>
+        <el-aside width="200px"
+          >歌列表
+          <!--有后台数据时取消注释
+            <ul class="musicList">
+            <li v-for="item in list" :key="item.id" @click="passLyric(item.address, item.src)">
+            <span>{{ item.musicname }}</span>
+            </li>
+          </ul>-->
+        </el-aside>
+        <el-col :span="8">
+          <el-main>
+            <div class="box">
+              <ul ref="ulValue">
+                <li v-for="item in arr" :key="item.time">{{ item.word }}</li>
+              </ul>
+            </div>
+          </el-main>
+        </el-col>
       </el-container>
     </el-container>
   </div>
@@ -124,4 +157,18 @@ audio {
   /* font-size: ; */
   transform: scale(1.2);
 }
+/*有后台数据时取消注释
+.musicList{
+  list-style: none;
+  li{
+    width: 100%;
+    height: 30px;
+    border-radius: 3px;
+    background-color: #fff;
+    border-bottom: 1px solid #000;
+  }
+}
+.el-aside{
+  overflow: scroll;
+}*/
 </style>

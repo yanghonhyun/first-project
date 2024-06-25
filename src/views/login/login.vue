@@ -1,9 +1,14 @@
 <script setup>
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 const ruleForm = ref({
   username: '',
   password: ''
 })
+const router = useRouter()
+const center = () => {
+  router.push('/layoutIndex')
+}
 //用户名以及密码规则
 const rule = {
   username: [
@@ -116,7 +121,7 @@ const change = ref(true)
           <span @click="change = true" style="padding-right: 100px"
             >登录页</span
           >
-          <el-button>登录</el-button>
+          <el-button @click="center">登录</el-button>
         </el-form-item>
       </el-form>
     </el-col>
@@ -131,7 +136,7 @@ const change = ref(true)
   height: 800px;
   background-color: aliceblue;
   border-radius: 10px;
-  margin: 100px auto;
+  margin: 50px auto;
   display: flex;
   align-items: center;
   justify-content: center;
