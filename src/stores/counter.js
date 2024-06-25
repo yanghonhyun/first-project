@@ -1,21 +1,38 @@
 //import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-export const useCounterStore = defineStore('counter', () => {
-  /*const count = ref(0)
-  const doubleCount = computed(() => count.value * 2)
-  function increment() {
-    count.value++
-  }
-
-  return { count, doubleCount, increment }*/
-  const token = ref('')
-  //获取token
-  const getToken = (Token) => {
-    token.value = Token
-  }
-  return {
-    token,
-    getToken
-  }
-})
+import { userGetInfoService } from '@/api/user.js'
+export const useCounterStore = defineStore(
+  'counter',
+  () => {
+    const token = ref('')
+    //获取token
+    const getToken = (Token) => {
+      token.value = Token
+    }
+    //移除token退出登录时使用
+    const reToken = () => {
+      token.value = ''
+    }
+    //获取用户信息
+    const user = ref('')
+    const getUser = async () => {
+      const res = await userGetInfoService()
+      user.value = res.data
+    }
+    //重置用户信息
+    const setUser = () => {
+      user.value = ''
+    }
+    return {
+      token,
+      getToken,
+      reToken,
+      getUser,
+      setUser,
+      user
+    }
+  },
+  //本地持久化储存
+  { persist: true }
+)

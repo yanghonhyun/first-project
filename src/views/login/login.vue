@@ -1,11 +1,32 @@
 <script setup>
+defineOptions({
+  name: 'loginPage'
+})
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+//import {token, getToken} from "@/stores/counter.js"
+//import {userLoginService} from '@/api/user.js'
+
 const ruleForm = ref({
   username: '',
   password: ''
 })
 const router = useRouter()
+//有后台数据时取消注释
+
+//登录并获取token
+/*const center = async () => {
+  //表单先前验证
+ await ruleFormRef.value.validate()
+ const res = await userLoginService(ruleForm.value)
+ //获取token
+ getToken(res.data.data.token)
+ if(token){
+  router.push('/layoutIndex')
+ }
+  router.push('/layoutIndex')
+}*/
+//有后台时删除下列代码
 const center = () => {
   router.push('/layoutIndex')
 }
@@ -61,6 +82,18 @@ const change = ref(true)
         ref="ruleFormRef"
         v-if="change"
       >
+        <span
+          style="
+            font-size: large;
+            font-size: 34px;
+            display: inline-block;
+            text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
+            font-weight: 700;
+            margin-bottom: 50px;
+            user-select: none;
+          "
+          >注册页</span
+        >
         <el-form-item prop="username">
           <el-input
             type="text"
@@ -83,13 +116,15 @@ const change = ref(true)
             placeholder="请输入验证码"
             class="code"
           ></el-input>
-          <span @click="getCode">{{
+          <span @click="getCode" style="cursor: pointer">{{
             get ? '获取验证码' : time + '秒后获取'
           }}</span>
         </el-form-item>
         <el-form-item>
-          <span @click="change = false" style="padding-right: 100px"
-            >登录页</span
+          <span
+            @click="change = false"
+            style="padding-right: 100px; cursor: pointer"
+            >go登录页</span
           >
           <el-button>注册</el-button>
         </el-form-item>
@@ -101,6 +136,18 @@ const change = ref(true)
         ref="ruleFormRef"
         v-else
       >
+        <span
+          style="
+            font-size: large;
+            font-weight: 700;
+            display: inline-block;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+            font-size: 34px;
+            margin-bottom: 50px;
+            user-select: none;
+          "
+          >登录页</span
+        >
         <el-form-item prop="username">
           <el-input
             type="text"
@@ -118,8 +165,10 @@ const change = ref(true)
           </el-input>
         </el-form-item>
         <el-form-item>
-          <span @click="change = true" style="padding-right: 100px"
-            >登录页</span
+          <span
+            @click="change = true"
+            style="padding-right: 100px; cursor: pointer"
+            >go注册页</span
           >
           <el-button @click="center">登录</el-button>
         </el-form-item>
@@ -129,16 +178,27 @@ const change = ref(true)
 </template>
 <style scoped>
 .code {
-  width: 600px;
+  width: 500px;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 .container {
   width: 600px;
   height: 800px;
-  background-color: aliceblue;
+  background-color: #ecf0f3;
+  box-shadow:
+    10px 10px 10px #d1d9e6,
+    -10px -10px 10px #f9f9f9;
   border-radius: 10px;
-  margin: 50px auto;
+  margin: auto;
   display: flex;
   align-items: center;
   justify-content: center;
+  input {
+    box-shadow: inset 3px 3px 3px #ecf0f3;
+  }
 }
 </style>

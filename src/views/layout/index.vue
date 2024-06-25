@@ -3,6 +3,7 @@ defineOptions({
   name: 'layoutIndex'
 })
 import { ref } from 'vue'
+import PageContainer from '@/components/PageContainer.vue'
 const tabPosition = ref()
 const userValue = ref(true)
 const messageValue = ref(false)
@@ -23,6 +24,59 @@ const change = (string) => {
     manngeValue.value = true
   }
 }
+const date = new Date()
+const formttedDate = date.toLocaleString('zh-CN', { hour12: false })
+const tableData = ref([
+  {
+    date: formttedDate,
+    mood: '有点难受',
+    diary: '今天玩了一会，学了一会',
+    place: '学校'
+  },
+  {
+    date: formttedDate,
+    mood: '有点难受',
+    diary: '今天玩了一会，学了一会',
+    place: '学校'
+  },
+  {
+    date: formttedDate,
+    mood: '有点难受',
+    diary: '今天玩了一会，学了一会',
+    place: '学校'
+  },
+  {
+    date: formttedDate,
+    mood: '有点难受',
+    diary: '今天玩了一会，学了一会',
+    place: '学校'
+  },
+  {
+    date: formttedDate,
+    mood: '有点难受',
+    diary: '今天玩了一会，学了一会',
+    place: '学校'
+  },
+  {
+    date: formttedDate,
+    mood: '有点难受',
+    diary: '今天玩了一会，学了一会',
+    place: '学校'
+  }
+])
+const drawer = ref(false)
+const innerDrawer = ref(false)
+const formValue = ref({
+  date: formttedDate,
+  mood: '',
+  diary: '',
+  place: ''
+})
+//编辑完确认操作
+const confirm = () => {
+  drawer.value = false
+  tableData.value.push(formValue.value)
+}
 </script>
 <template>
   <el-radio-group v-model="tabPosition" style="margin-bottom: 30px">
@@ -40,21 +94,62 @@ const change = (string) => {
   </el-tabs>
   <!--用户日记表格-->
   <el-table :data="tableData" style="width: 100%" v-if="userValue">
-    <el-table-column fixed prop="date" label="Date" width="150" />
-    <el-table-column prop="name" label="Name" width="120" />
-    <el-table-column prop="state" label="State" width="120" />
-    <el-table-column prop="city" label="City" width="120" />
-    <el-table-column prop="address" label="Address" width="600" />
-    <el-table-column prop="zip" label="Zip" width="120" />
-    <el-table-column fixed="right" label="Operations" width="120">
+    <el-table-column fixed prop="date" label="日期" width="150" />
+    <el-table-column prop="mood" label="心情" width="120" />
+    <el-table-column prop="diary" label="日记" width="120" />
+    <el-table-column prop="place" label="地点" width="120" />
+    <el-table-column fixed="right" label="操作" width="120">
       <template #default>
         <el-button link type="primary" size="small" @click="handleClick">
           Detail
         </el-button>
-        <el-button link type="primary" size="small">Edit</el-button>
+        <el-button link type="primary" size="small" @click="drawer = true"
+          >Edit</el-button
+        >
       </template>
     </el-table-column>
   </el-table>
+  <!--抽屉-->
+  <el-drawer v-model="drawer" title="写点今天的事情吧" size="50%">
+    <div>
+      <el-button @click="innerDrawer = true">Click me!</el-button>
+      <el-drawer
+        v-model="innerDrawer"
+        title="添加新事件"
+        :append-to-body="true"
+        :before-close="handleClose"
+      >
+        <p>_(:зゝ∠)_</p>
+      </el-drawer>
+      <!--插槽位置-->
+      <page-container>
+        <template #extra>
+          <span>进行编辑</span>
+        </template>
+      </page-container>
+      <!--编辑-->
+      <div>今天心情怎么样</div>
+      <el-input
+        v-model="formValue.mood"
+        style="width: 240px"
+        autosize
+        type="textarea"
+        placeholder="Please input"
+      />
+      <div style="margin: 20px 0" />
+      <div>想写点什么</div>
+      <el-input
+        v-model="formValue.diary"
+        style="width: 240px"
+        :autosize="{ minRows: 2, maxRows: 4 }"
+        type="textarea"
+        placeholder="Please input"
+      />
+    </div>
+    <div>在什么地方</div>
+    <el-input v-model="formValue.place" style="width: 200px"></el-input>
+    <el-button @click="confirm">确定</el-button>
+  </el-drawer>
 </template>
 <style scoped>
 .demo-tabs > .el-tabs__content {
