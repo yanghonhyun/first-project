@@ -19,7 +19,10 @@ const router = createRouter({
       ]
     },
     { redirect: '/login' },
-    { path: '/login', component: () => import('@/views/login/login.vue') }
+    { path: '/login', component: () => import('@/views/login/login.vue') },
+    { path: '/avatar', component: () => import('@/views/user/avatar.vue') },
+    { path: '/password', component: () => import('@/views/user/password.vue') },
+    { path: '/profile', component: () => import('@/views/user/profile.vue') }
   ]
 })
 

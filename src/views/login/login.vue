@@ -17,7 +17,7 @@ const router = useRouter()
 //登录并获取token
 /*const center = async () => {
   //表单先前验证
- await ruleFormRef.value.validate()
+ await ruleFormRef.value.validator()
  const res = await userLoginService(ruleForm.value)
  //获取token
  getToken(res.data.data.token)
@@ -73,107 +73,109 @@ const getCode = () => {
 const change = ref(true)
 </script>
 <template>
-  <div class="container">
-    <el-col :span="12">
-      <el-form
-        status-icon
-        :model="ruleForm"
-        :rules="rule"
-        ref="ruleFormRef"
-        v-if="change"
-      >
-        <span
-          style="
-            font-size: large;
-            font-size: 34px;
-            display: inline-block;
-            text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
-            font-weight: 700;
-            margin-bottom: 50px;
-            user-select: none;
-          "
-          >注册页</span
+  <div class="box">
+    <div class="container">
+      <el-col :span="12">
+        <el-form
+          status-icon
+          :model="ruleForm"
+          :rules="rule"
+          ref="ruleFormRef"
+          v-if="change"
         >
-        <el-form-item prop="username">
-          <el-input
-            type="text"
-            placeholder="请输入用户名"
-            v-model="ruleForm.username"
-          >
-          </el-input>
-        </el-form-item>
-        <el-form-item prop="password">
-          <el-input
-            type="text"
-            placeholder="请输入密码"
-            v-model="ruleForm.password"
-          >
-          </el-input>
-        </el-form-item>
-        <el-form-item>
-          <el-input
-            type="text"
-            placeholder="请输入验证码"
-            class="code"
-          ></el-input>
-          <span @click="getCode" style="cursor: pointer">{{
-            get ? '获取验证码' : time + '秒后获取'
-          }}</span>
-        </el-form-item>
-        <el-form-item>
           <span
-            @click="change = false"
-            style="padding-right: 100px; cursor: pointer"
-            >go登录页</span
+            style="
+              font-size: large;
+              font-size: 34px;
+              display: inline-block;
+              text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
+              font-weight: 700;
+              margin-bottom: 50px;
+              user-select: none;
+            "
+            >注册页</span
           >
-          <el-button>注册</el-button>
-        </el-form-item>
-      </el-form>
-      <el-form
-        status-icon
-        :model="ruleForm"
-        :rules="rule"
-        ref="ruleFormRef"
-        v-else
-      >
-        <span
-          style="
-            font-size: large;
-            font-weight: 700;
-            display: inline-block;
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
-            font-size: 34px;
-            margin-bottom: 50px;
-            user-select: none;
-          "
-          >登录页</span
+          <el-form-item prop="username">
+            <el-input
+              type="text"
+              placeholder="请输入用户名"
+              v-model="ruleForm.username"
+            >
+            </el-input>
+          </el-form-item>
+          <el-form-item prop="password">
+            <el-input
+              type="text"
+              placeholder="请输入密码"
+              v-model="ruleForm.password"
+            >
+            </el-input>
+          </el-form-item>
+          <el-form-item>
+            <el-input
+              type="text"
+              placeholder="请输入验证码"
+              class="code"
+            ></el-input>
+            <span @click="getCode" style="cursor: pointer">{{
+              get ? '获取验证码' : time + '秒后获取'
+            }}</span>
+          </el-form-item>
+          <el-form-item>
+            <span
+              @click="change = false"
+              style="padding-right: 100px; cursor: pointer"
+              >go登录页</span
+            >
+            <el-button>注册</el-button>
+          </el-form-item>
+        </el-form>
+        <el-form
+          status-icon
+          :model="ruleForm"
+          :rules="rule"
+          ref="ruleFormRef"
+          v-else
         >
-        <el-form-item prop="username">
-          <el-input
-            type="text"
-            placeholder="请输入用户名"
-            v-model="ruleForm.username"
-          >
-          </el-input>
-        </el-form-item>
-        <el-form-item prop="password">
-          <el-input
-            type="text"
-            placeholder="请输入密码"
-            v-model="ruleForm.password"
-          >
-          </el-input>
-        </el-form-item>
-        <el-form-item>
           <span
-            @click="change = true"
-            style="padding-right: 100px; cursor: pointer"
-            >go注册页</span
+            style="
+              font-size: large;
+              font-weight: 700;
+              display: inline-block;
+              text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+              font-size: 34px;
+              margin-bottom: 50px;
+              user-select: none;
+            "
+            >登录页</span
           >
-          <el-button @click="center">登录</el-button>
-        </el-form-item>
-      </el-form>
-    </el-col>
+          <el-form-item prop="username">
+            <el-input
+              type="text"
+              placeholder="请输入用户名"
+              v-model="ruleForm.username"
+            >
+            </el-input>
+          </el-form-item>
+          <el-form-item prop="password">
+            <el-input
+              type="text"
+              placeholder="请输入密码"
+              v-model="ruleForm.password"
+            >
+            </el-input>
+          </el-form-item>
+          <el-form-item>
+            <span
+              @click="change = true"
+              style="padding-right: 100px; cursor: pointer"
+              >go注册页</span
+            >
+            <el-button @click="center">登录</el-button>
+          </el-form-item>
+        </el-form>
+      </el-col>
+    </div>
   </div>
 </template>
 <style scoped>
@@ -184,6 +186,13 @@ const change = ref(true)
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+.box {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  box-shadow: inset 10px 10px 5px rgba(0, 0, 0, 0.5);
 }
 .container {
   width: 600px;

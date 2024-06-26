@@ -98,7 +98,12 @@ const passLyric = (address, srcAddress) => {
       <el-header>
         <!--有网络数据将audio换成这个
         <audio :src=src></audio>!-->
-        <audio src="src\assets\music.mp3" controls ref="audio"></audio>
+        <audio
+          src="src\assets\music.mp3"
+          controls
+          ref="audio"
+          style="height: 50px; margin-left: 180px"
+        ></audio>
       </el-header>
       <el-container>
         <el-aside width="200px"
@@ -130,6 +135,8 @@ const passLyric = (address, srcAddress) => {
 }
 .el-main {
   background-color: #000;
+  margin-top: 50px;
+  border-radius: 10px;
   color: #666;
   text-align: center;
   display: flex;

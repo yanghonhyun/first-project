@@ -6,14 +6,64 @@ import {
   Document,
   Menu as IconMenu,
   Location,
-  Setting
+  Setting,
+  User,
+  Crop,
+  EditPen,
+  SwitchButton,
+  ElMessageBox
 } from '@element-plus/icons-vue'
+import { useRouter } from 'vue-router'
+import { useCounterStore } from '@/stores/counter.js'
+const router = useRouter()
+const userStore = useCounterStore()
 import { ref } from 'vue'
 const isCollapse = ref(true)
+const circleUrl = ref(
+  'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png'
+)
+
+const onCommand = async (command) => {
+  if (command === 'logout') {
+    await ElMessageBox.confirm('你确定要退出吗', '温馨提示', {
+      type: 'warning',
+      confirmButtonText: '确认',
+      cancelButtonText: '取消'
+    })
+    userStore.reToken()
+    userStore.setUser()
+    router.push('/login')
+  } else {
+    router.push(`/${command}`)
+  }
+}
 </script>
 
 <template>
-  <div class="common-layout">
+  <div class="common-layout" style="position: relative">
+    <div class="box" style="position: absolute; right: 20px">
+      <el-dropdown @command="onCommand">
+        <span class="el-dropdown-link">
+          <el-avatar :size="50" :src="circleUrl" @click="onAvatarInfo" />
+        </span>
+        <template #dropdown>
+          <el-dropdown-menu>
+            <el-dropdown-item command="profile" :icon="User"
+              >基本资料</el-dropdown-item
+            >
+            <el-dropdown-item command="avatar" :icon="Crop"
+              >更换头像</el-dropdown-item
+            >
+            <el-dropdown-item command="password" :icon="EditPen"
+              >重置密码</el-dropdown-item
+            >
+            <el-dropdown-item command="logout" :icon="SwitchButton"
+              >退出登录</el-dropdown-item
+            >
+          </el-dropdown-menu>
+        </template>
+      </el-dropdown>
+    </div>
     <el-container>
       <el-aside width="200px">
         <el-radio-group v-model="isCollapse" style="margin-bottom: 20px">
@@ -48,7 +98,7 @@ const isCollapse = ref(true)
               <el-menu-item index="1-4-1">主页面</el-menu-item>
             </el-sub-menu>
           </el-sub-menu>
-          <el-menu-item index="2">
+          <el-menu-item index="/layoutIndex">
             <el-icon><icon-menu /></el-icon>
             <template #title>聊天</template>
           </el-menu-item>
@@ -73,7 +123,7 @@ const isCollapse = ref(true)
   </div>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 .el-menu-vertical-demo:not(.el-menu--collapse) {
   width: 200px;
   min-height: 400px;

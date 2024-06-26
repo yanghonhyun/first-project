@@ -4,7 +4,7 @@ defineOptions({
 })
 import { ref } from 'vue'
 import PageContainer from '@/components/PageContainer.vue'
-const tabPosition = ref()
+/*const tabPosition = ref()
 const userValue = ref(true)
 const messageValue = ref(false)
 const manngeValue = ref(false)
@@ -23,7 +23,7 @@ const change = (string) => {
     messageValue.value = false
     manngeValue.value = true
   }
-}
+}*/
 const date = new Date()
 const formttedDate = date.toLocaleString('zh-CN', { hour12: false })
 const tableData = ref([
@@ -72,13 +72,39 @@ const formValue = ref({
   diary: '',
   place: ''
 })
+const emptyForm = {
+  date: formttedDate,
+  mood: '',
+  diary: '',
+  place: ''
+}
+const title = ref('')
 //编辑完确认操作
 const confirm = () => {
   drawer.value = false
   tableData.value.push(formValue.value)
+  formValue.value = emptyForm
+}
+//表格删除操作
+const handleClick = (index) => {
+  tableData.value.splice(index, 1)
+}
+//表格编辑操作
+const onEdit = (index, row) => {
+  drawer.value = true
+  title.value = '编辑原内容'
+  console.log(index, row)
+  //回显
+  formValue.value = row
+}
+const addEvent = () => {
+  title.value = '添加'
+  drawer.value = true
+  console.log('???')
 }
 </script>
 <template>
+  <!--
   <el-radio-group v-model="tabPosition" style="margin-bottom: 30px">
     <el-radio-button value="top">顶部</el-radio-button>
     <el-radio-button value="right">右边</el-radio-button>
@@ -91,19 +117,29 @@ const confirm = () => {
     <el-tab-pane label="信息" @click="change('message')">信息</el-tab-pane>
     <el-tab-pane label="管理" @click="change('mannge')">管理</el-tab-pane>
     <el-tab-pane label="退出">退出</el-tab-pane>
-  </el-tabs>
+  </el-tabs>-->
   <!--用户日记表格-->
-  <el-table :data="tableData" style="width: 100%" v-if="userValue">
+  <el-button @click="addEvent">添加新事件</el-button>
+  <el-table :data="tableData" style="width: 100%">
     <el-table-column fixed prop="date" label="日期" width="150" />
     <el-table-column prop="mood" label="心情" width="120" />
     <el-table-column prop="diary" label="日记" width="120" />
     <el-table-column prop="place" label="地点" width="120" />
     <el-table-column fixed="right" label="操作" width="120">
-      <template #default>
-        <el-button link type="primary" size="small" @click="handleClick">
+      <template #default="scope">
+        <el-button
+          link
+          type="primary"
+          size="small"
+          @click="handleClick(scope.$index, scope.row)"
+        >
           Detail
         </el-button>
-        <el-button link type="primary" size="small" @click="drawer = true"
+        <el-button
+          link
+          type="primary"
+          size="small"
+          @click="onEdit(scope.$index, scope.row)"
           >Edit</el-button
         >
       </template>
@@ -122,7 +158,7 @@ const confirm = () => {
         <p>_(:зゝ∠)_</p>
       </el-drawer>
       <!--插槽位置-->
-      <page-container>
+      <page-container :title="title">
         <template #extra>
           <span>进行编辑</span>
         </template>
