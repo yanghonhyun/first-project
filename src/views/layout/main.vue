@@ -10,9 +10,9 @@ import {
   User,
   Crop,
   EditPen,
-  SwitchButton,
-  ElMessageBox
+  SwitchButton
 } from '@element-plus/icons-vue'
+import { ElMessageBox } from 'element-plus'
 import { useRouter } from 'vue-router'
 import { useCounterStore } from '@/stores/counter.js'
 const router = useRouter()

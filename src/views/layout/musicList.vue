@@ -48,13 +48,13 @@ const findIndex = () => {
 }
 const ulValue = ref(null)
 onMounted(() => {
-  const box = document.querySelector('.box')
-  const lis = document.querySelectorAll('.box li')
+  const box = document.querySelector('.boxMu')
+  const lis = document.querySelectorAll('.boxMu li')
   //console.log(box, lis, ulValue.value)
   const liHeight = lis[0].clientHeight
   //console.log(lis[0])
   const boxHeight = box.clientHeight
-  console.log('li高度，盒子高度', liHeight, boxHeight)
+  console.log('li高度，盒子高度', liHeight, boxHeight, box)
   //最大偏移量
   let maxOffset = ulValue.value.clientHeight - boxHeight
   const setOffset = () => {
@@ -117,7 +117,7 @@ const passLyric = (address, srcAddress) => {
         </el-aside>
         <el-col :span="8">
           <el-main>
-            <div class="box">
+            <div class="boxMu">
               <ul ref="ulValue">
                 <li v-for="item in arr" :key="item.time">{{ item.word }}</li>
               </ul>
@@ -142,7 +142,7 @@ const passLyric = (address, srcAddress) => {
   display: flex;
   justify-content: center;
 }
-.box {
+.boxMu {
   height: 420px;
   overflow: hidden;
 }
